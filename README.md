@@ -1,4 +1,4 @@
-# Hack_36_Project ##
+# Hack_36_Project ##WaBooks
 Learning and Reading a Book in a Latest and Effective Way
 
 Introduction:
@@ -6,7 +6,9 @@ Learning and Reading a Book in a Latest and Effective Way
 
 Demo Video Link:
 
+
 Presentation Link:
+
 
 Technology Stack:
   
@@ -23,7 +25,7 @@ Team Name:Indiro
   RAUSHAN KUMAR
   RAJAT BHATNAGAR
 
-Made at:
+Made at: HACK-36
 
 
 
