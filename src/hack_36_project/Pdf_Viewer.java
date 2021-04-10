@@ -17,6 +17,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.Node;
@@ -29,10 +30,13 @@ import javax.swing.filechooser.FileFilter;
 import javax.swing.text.Document;
 import org.icepdf.core.AnnotationCallback;
 import org.icepdf.core.SecurityCallback;
+import org.icepdf.core.pobjects.OutlineItem;
+import org.icepdf.core.pobjects.Outlines;
 import org.icepdf.core.pobjects.Page;
 import org.icepdf.core.views.PageViewComponent;
 import org.icepdf.core.views.swing.AbstractPageViewComponent;
 import org.icepdf.ri.common.ComponentKeyBinding;
+import org.icepdf.ri.common.OutlineItemTreeNode;
 import org.icepdf.ri.common.SwingController;
 import org.icepdf.ri.common.SwingViewBuilder;
 import org.icepdf.ri.common.views.AbstractDocumentView;
@@ -55,40 +59,12 @@ public class Pdf_Viewer extends javax.swing.JFrame {
         System.getProperties().put("org.icepdf.core.views.page.shadow.color", "#FFFFFF");
         
         initComponents();
-        A();
+       
     }
     
-    void A()
-    {
-        Thread th=new Thread(new Runnable() {
-
-            @Override
-            public void run() {
-                
-                while(true)
-                {
-                   
-                        String ans=readClipboard();
-                        System.out.println(ans);
-                                
-                }
-            }
-        });
-        th.start();
-    }
     
-    public String readClipboard(){
-        try {
-            return (String) Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor);
-        } catch (UnsupportedFlavorException ex) {
-            Logger.getLogger(Pdf_Viewer.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(Pdf_Viewer.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        return null;
-}
     
+  
    
     
    
@@ -323,9 +299,28 @@ public class Pdf_Viewer extends javax.swing.JFrame {
                     control.getDocumentViewController()));
                     control.openDocument(file);
             pdf_scroll_pane.setViewportView(veiwerCompntpnl); 
+            
+            OutlineItem item = null;
+    Outlines outlines = control.getDocument().getCatalog().getOutlines();
+    if (outlines != null){
+        item = outlines.getRootOutlineItem();
+    }
+    if (item != null) {
+        OutlineItemTreeNode outlineItemTreeNode = new OutlineItemTreeNode(item);
+        outlineItemTreeNode.getChildCount();  // Added this line
+        Enumeration depthFirst = outlineItemTreeNode.depthFirstEnumeration();
+        while(depthFirst!=null)
+        {
+            System.out.println(depthFirst.toString());
+            depthFirst.nextElement();
+        }
+        // find the node you need
+    }
       } catch (Exception ex) {
             JOptionPane.showMessageDialog(this,"Cannot Load Pdf");
         }
+    
+    
     }
     
     public static void main(String args[]) {
