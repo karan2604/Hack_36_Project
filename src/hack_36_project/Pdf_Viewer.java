@@ -89,6 +89,7 @@ public class Pdf_Viewer extends javax.swing.JFrame {
         BelowJPanel = new javax.swing.JPanel();
         search_dict = new javax.swing.JButton();
         txt2 = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -170,6 +171,11 @@ public class Pdf_Viewer extends javax.swing.JFrame {
         txt2.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         txt2.setToolTipText("Search Here");
         txt2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
+        txt2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt2ActionPerformed(evt);
+            }
+        });
         txt2.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txt2KeyTyped(evt);
@@ -197,12 +203,21 @@ public class Pdf_Viewer extends javax.swing.JFrame {
                 .addContainerGap(434, Short.MAX_VALUE))
         );
 
+        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(btn_open_pdf)
+                .addGap(466, 466, 466)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(15, Short.MAX_VALUE)
@@ -217,7 +232,11 @@ public class Pdf_Viewer extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btn_open_pdf)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btn_open_pdf)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -277,8 +296,25 @@ public class Pdf_Viewer extends javax.swing.JFrame {
         if(c==JFileChooser.APPROVE_OPTION)
         {
             openpdf(ch.getSelectedFile().getAbsolutePath());
+            
+            BookMark_Index.getallindex(ch.getSelectedFile().getAbsolutePath());
         }
     }//GEN-LAST:event_btn_open_pdfActionPerformed
+
+    private void txt2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        Item item=BookMark_Index.getpreviouspage(453);
+        
+        if(item!=null)
+        {
+        System.out.println(item.getKey());
+        System.out.println(item.getTitle());
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -300,25 +336,12 @@ public class Pdf_Viewer extends javax.swing.JFrame {
                     control.openDocument(file);
             pdf_scroll_pane.setViewportView(veiwerCompntpnl); 
             
-            OutlineItem item = null;
-    Outlines outlines = control.getDocument().getCatalog().getOutlines();
-    if (outlines != null){
-        item = outlines.getRootOutlineItem();
-    }
-    if (item != null) {
-        OutlineItemTreeNode outlineItemTreeNode = new OutlineItemTreeNode(item);
-        outlineItemTreeNode.getChildCount();  // Added this line
-        Enumeration depthFirst = outlineItemTreeNode.depthFirstEnumeration();
-        while(depthFirst!=null)
-        {
-            System.out.println(depthFirst.toString());
-            depthFirst.nextElement();
-        }
-        // find the node you need
-    }
+          
+    
       } catch (Exception ex) {
             JOptionPane.showMessageDialog(this,"Cannot Load Pdf");
         }
+            
     
     
     }
@@ -359,6 +382,7 @@ public class Pdf_Viewer extends javax.swing.JFrame {
     private javax.swing.JPanel AboveJPanel;
     private javax.swing.JPanel BelowJPanel;
     private javax.swing.JButton btn_open_pdf;
+    private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane pdf_scroll_pane;
     private javax.swing.JButton search_dict;
     private javax.swing.JButton search_video;
